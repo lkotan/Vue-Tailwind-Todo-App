@@ -28,7 +28,10 @@ export default {
       const res = await fetch(`${this.$baseURL}/todos/${this.todo.id}`, {
         method: "DELETE",
       });
-      if (res.status == 200) this.$emit("getData")
+      if (res.status == 200){
+        this.$emit("getData")
+        this.$toasted.show(`${this.todo.name.toUpperCase()} deleted`,{icon:'delete'});
+      }
     },
   },
 };

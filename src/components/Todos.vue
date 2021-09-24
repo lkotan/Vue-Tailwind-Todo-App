@@ -2,7 +2,7 @@
   <div class="todos">
     <header class="header">
       <h5>Todo App Vue-Tailwind</h5>
-      <Button class="add" name="Add" @eventClick="$router.push('/todo')" />
+      <Button class="add" name="Add" @eventClick="$router.push('/todo')"/>
     </header>
     <div v-if="todos.length != 0">
       <Todo

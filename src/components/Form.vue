@@ -5,10 +5,16 @@
       <input type="text" placeholder="Name" v-model="todo.name" />
     </div>
     <div class="form-control">
-      <Select @onChange="onChange"/>
+      <Select @onChange="onChange" />
     </div>
     <footer>
-      <Button :disabled="disabled" :class="[disabled ? 'disabled' : '']" class="save" name="Save" @eventClick="save" />
+      <Button
+        :disabled="disabled"
+        :class="[disabled ? 'disabled' : '']"
+        class="save"
+        name="Save"
+        @eventClick="save"
+      />
       <Button class="cancel" name="Cancel" @eventClick="$router.push('/')" />
     </footer>
   </div>
@@ -21,7 +27,7 @@ export default {
   name: "Form",
   components: {
     Button,
-    Select
+    Select,
   },
   data() {
     return {
@@ -31,10 +37,10 @@ export default {
       },
     };
   },
-  computed:{
-    disabled(){
-      return this.todo.name == "" ? true : false
-    }
+  computed: {
+    disabled() {
+      return this.todo.name == "" ? true : false;
+    },
   },
   methods: {
     async save() {
@@ -45,7 +51,12 @@ export default {
         },
         body: JSON.stringify(this.todo),
       });
-      if(res.status==201) this.$router.push("/")
+      if (res.status == 201) {
+        this.$toasted.show(`${this.todo.name.toUpperCase()} added`,{icon:"add_circle"});
+        setTimeout(() => {
+          this.$router.push("/")
+        }, 1500);
+      }
     },
     onChange(e) {
       this.todo.priority = e.target.value;
@@ -55,11 +66,9 @@ export default {
 </script>
 
 <style>
-.disabled{
-  @apply
-
-  opacity-60
-  cursor-default
+.disabled {
+  @apply opacity-60
+  cursor-default;
 }
 .form {
   @apply p-3
@@ -102,7 +111,7 @@ export default {
   @apply mr-3
   bg-blue-700
   hover:bg-blue-400
-  hover:text-black
+  hover:text-black;
 }
 .cancel {
   @apply bg-gray-400
