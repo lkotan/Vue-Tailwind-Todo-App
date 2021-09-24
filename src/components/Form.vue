@@ -5,15 +5,10 @@
       <input type="text" placeholder="Name" v-model="todo.name" />
     </div>
     <div class="form-control">
-      <select @change="onChange">
-        <option disabled selected>Lütfen seçin</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="critical">Critical</option>
-      </select>
+      <Select @onChange="onChange"/>
     </div>
     <footer>
-      <Button class="save" name="Save" @eventClick="save" />
+      <Button :disabled="disabled" :class="[disabled ? 'disabled' : '']" class="save" name="Save" @eventClick="save" />
       <Button class="cancel" name="Cancel" @eventClick="$router.push('/')" />
     </footer>
   </div>
@@ -21,18 +16,25 @@
 
 <script>
 import Button from "@/components/Button";
+import Select from "@/components/Select";
 export default {
   name: "Form",
   components: {
     Button,
+    Select
   },
   data() {
     return {
       todo: {
-        name: null,
+        name: "",
         priority: "low",
       },
     };
+  },
+  computed:{
+    disabled(){
+      return this.todo.name == "" ? true : false
+    }
   },
   methods: {
     async save() {
@@ -53,6 +55,12 @@ export default {
 </script>
 
 <style>
+.disabled{
+  @apply
+
+  opacity-60
+  cursor-default
+}
 .form {
   @apply p-3
   rounded-sm
@@ -94,7 +102,7 @@ export default {
   @apply mr-3
   bg-blue-700
   hover:bg-blue-400
-  hover:text-black;
+  hover:text-black
 }
 .cancel {
   @apply bg-gray-400
